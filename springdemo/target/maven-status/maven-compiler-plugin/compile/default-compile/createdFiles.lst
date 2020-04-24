@@ -1,0 +1,9 @@
+com\customer\springdemo\dao\CustomerDAO.class
+com\customer\springdemo\entity\Customer.class
+com\customer\springdemo\service\CustomerService.class
+com\customer\springdemo\controller\CustomerRestController.class
+com\customer\springdemo\controller\ContenedorLista.class
+com\customer\testdb\TestDbServlet.class
+com\customer\springdemo\service\CustomerServiceImpl.class
+com\customer\springdemo\controller\CustomerController.class
+com\customer\springdemo\dao\CustomerDAOImpl.class
