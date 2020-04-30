@@ -100,21 +100,91 @@ function fillFaker(){
 		}
 		
 	});
-	
-	
-	
 }
 
 
+function showList(){
+	console.log("In");
+	var path = location.pathname.split('/');
+	if (path[path.length-2].indexOf('.html')>-1) {
+		  path.length = path.length - 1;
+		}
+	var app = path[path.length-3];
+	console.log(app);
+	
+	$("#RegForm").hide();
+	$("#loadingdiv").show();
+	
+	$.ajax({
+		
+		url: "/"+ app +"/list",
+		type:"GET",
+		error: function(){
+			console.log("error");
+		},
+		success: function(data){
+			
+			var $table = $("<table border='1' ></table>"); 
+	        $table.append(	"<tr>" +
+				        		"<th style='text-align:center' >First Name</th>" +
+				        		"<th style='text-align:center' >Last Name</th>" +
+				        		"<th style='text-align:center' >Email</th>" +
+				        		"<th style='text-align:center' >Options</th>" +
+			        		"</tr>");
+	        
+			for(obj of data.lista){
+				var tdid = "tr" + obj.id;
+				$table.append(
+						"<tr id='" + tdid + "' >" +
+						"	<td>" + obj.firstName + "</td>" +
+						"	<td>" + obj.lastName + "</td>" +
+						"	<td>" + obj.email +"</td>" +
+						"	<td>" +
+						"		<button  type='button'    class='btn btn-info btn-sm' data-toggle='modal' data-target='#myModal'   id='" + obj.id + "'>Edit</button>&nbsp;&nbsp;" +
+						"		<button  name='delButton' class='btn btn-info btn-sm' method='delete' onclick='deleteCustomer(id)' id='" + obj.id + "'>Delete</button>" +
+						"	</td>" +
+						"</tr>")
+						
+			}
+			$("body").append($table);
+		}
+	});
+	
+}
 
-
-
-
-
-
-
-
-
+function deleteCustomer(id){
+	
+	
+	
+	if (confirm('Do you really want to delete record?')) {
+		
+		var path = location.pathname.split('/');
+		if (path[path.length-2].indexOf('.html')>-1) {
+			  path.length = path.length - 1;
+			}
+		var app = path[path.length-3];
+		
+		console.log(app);
+		console.log("/"+ app +"/delete/"+id);
+		
+		$.ajax({
+			
+	        type : 'DELETE',
+	        contentType: "application/json",
+	        url : "/"+ app +"/delete/"+id,
+	        dataType : 'json',
+	        
+	        success: function (result) {
+	        	console.log(result);
+	        	var tr = "tr"+id;
+	        	document.getElementById(tr).remove();
+	        },
+	        error: function (e) {
+	            console.log(e);
+	        }
+	   })
+	}
+};
 
 
 

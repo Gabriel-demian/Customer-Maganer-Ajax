@@ -3,8 +3,14 @@ package com.customer.springdemo.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.customer.springdemo.entity.Customer;
@@ -34,15 +40,37 @@ public class CustomerRestController {
 	}
 	
 	@RequestMapping("/fake")
-	public Customer fakerCustomer(){
+	public Customer fakerCustomer() throws InterruptedException{
 		Faker faker = new Faker();
 		Customer theCustomer = new Customer();
 		
 		theCustomer.setFirstName(faker.name().firstName());
 		theCustomer.setLastName(faker.name().lastName());
 		theCustomer.setEmail(theCustomer.getFirstName() +"."+ theCustomer.getLastName()+"@gmail.com");
+		Thread.sleep(1500);
+		return theCustomer;
+	}
+	
+	
+	@GetMapping("/showFormForUpdate")
+	public Customer showFormForUpdate(@ModelAttribute("customerId") int theId, 
+									Model theModel) {
+		
+		Customer theCustomer = customerService.getCustomer(theId);
+		
+		theModel.addAttribute("customer", theCustomer);
 		
 		return theCustomer;
+	}
+	
+	
+	
+	@DeleteMapping("/delete/{id}")
+	public ResponseEntity<Void> deleteCustomer(@PathVariable int id) {
+		
+		customerService.deleteCustomer(id);
+		
+		return ResponseEntity.noContent().build();
 	}
 	
 }

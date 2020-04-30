@@ -72,6 +72,7 @@ public class CustomerController {
 	public String showFormForUpdate(@ModelAttribute("customerId") int theId, 
 									Model theModel) {
 		
+		System.out.println("EDITAR CLIENTE");
 		// obtener el cliente del service
 		Customer theCustomer = customerService.getCustomer(theId);
 		

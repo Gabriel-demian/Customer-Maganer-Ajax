@@ -11,83 +11,71 @@
 		rel="stylesheet"
 		href="${pageContext.request.contextPath}/resources/css/style.css" />
 		
+		
+		<script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+		<script src="${pageContext.request.contextPath}/resources/js/validation.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+ 		 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+		
 	</head>
-	<body>
+	<body onload="showList()" >
 		
 		<div align="center" id="wrapper">
 			<div id="header">
 				<h2>CRM - Customer Relationship Manager</h2>
 			</div>
 		</div>
+			
 		
-		<div align="center"  id="container">
 		
-			<div id="content">
-				
-				<!-- put new button: Add Customer -->
+		<div id="content" align="center">
+		
+				<!-- UPDATE CUSTOMER -->
+				<c:url var="updateLink" value="editPage()'">
+					<c:param name="customerId" value="${tempCustomer.id}"></c:param>
+				</c:url>
+		
+				<!-- ADD CUSTOMER -->
 				<input type="button" value="Add Customer"
 						onclick="window.location.href='showFormAdd'; return false;" 
 						class="add-button"
 				/>
 				
 				
+				<!-- FAKE CUSTOMER -->
 				<input type="button" value="Fake Customer"
 						onclick="window.location.href='showFormFaker'; return false;" 
 						class="add-button"
 				/>
-						<!-- la acción de "onclick" llama al Spring Controller mapping -->
-						<!-- class="add-button" le da estilo del CSS Style -->
-				
-				
-				<!--  add a search box -->
-	            <form:form action="search" method="GET">
-	                Search customer: <input type="text" name="theSearchName" />
-	                
-	                <input type="submit" value="Search" class="add-button" />
-	            </form:form>
-				
-				<!-- agregar tabla html -->
-				
-				<table>
-					<tr>
-						<th>First Name</th>
-						<th>Last Name</th>
-						<th>Email</th>
-						<th>Action</th>
-					</tr>
-					
-					<!-- loop y mostrar la tabla de clientes -->
-					<c:forEach var="tempCustomer" items="${customers}"> <!-- customers es el atributo pasado en el Model -->
-						
-						<!-- construir el link "update" con link al customer id -->
-						<c:url var="updateLink" value="/customer/showFormForUpdate">
-							<c:param name="customerId" value="${tempCustomer.id}"></c:param>
-						</c:url>
-						
-						<!-- construir el link "Delete" con link al customer id -->
-						<c:url var="deleteLink" value="/customer/delete">
-							<c:param name="customerId" value="${tempCustomer.id}"></c:param>
-						</c:url>
-						
-						<tr>
-							<td>${tempCustomer.firstName}</td>
-							<td>${tempCustomer.lastName}</td>
-							<td>${tempCustomer.email}</td>
-							<td>
-								<a href="${updateLink}">Update</a>
-								<a href="${deleteLink}" 
-									onclick="if(!(confirm('Are you sure you want to delete this customer?'))) return false">Delete</a>
-							</td>
-						</tr>
-						
-					</c:forEach>
-					
-				</table>
-				
-			</div>
-			
-			
+				<br>
 		</div>
+		
+		
+		
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Edit Customerr</h4>
+        </div>
+        
+        
+        <jsp:include page="table-edit-include.jsp" flush="true" />
+        
+        
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
 		
 	</body>
 </html>

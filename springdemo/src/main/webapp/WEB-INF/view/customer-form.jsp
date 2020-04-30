@@ -22,6 +22,7 @@
 		
 		<script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
 		
+		
 		<script src="${pageContext.request.contextPath}/resources/js/validation.js"></script>
 		
 	</head>
@@ -29,13 +30,13 @@
 	
 	<body>
 		
-		<div id="wrapper">
+		<div id="wrapper" align="center">
 			<div id="header">
 				<h2>CRM - Customer Relationship Manager</h2>
 			</div>
 		</div>
 		
-		<div id="container">
+		<div id="container" align="center">
 			<h3>Save Customer</h3>
 		
 			<form name="RegForm" action="saveCustomer" onsubmit="return Validador()" method="post" id="RegForm">
@@ -57,10 +58,13 @@
 				    	<div id="email_error"></div>
    					</div>
 					<br> 
-					<p><input type="submit" value="send" name="Submit">  
-						<input type="reset" value="reset" id="reset">  
+					<p> 
+						<input type="reset" value="reset" id="reset">
 						<input type="button" value="faker" id="fakerButton" onclick="fillFaker()">  
 					</p> 
+					<p>
+						<input type="submit" value="send" name="Submit">
+					</p>
 				</div>
 			</form>
 			
