@@ -1,6 +1,19 @@
+var app;
+var customers;
+var debug = true;
+
+
 window.onload = function(){
 	$("#loadingdiv").hide();
+	
+	path = location.pathname.split('/');
+	if (path[path.length-2].indexOf('.html')>-1) {
+		  path.length = path.length - 1;
+		}
+	app = path[path.length-3];
+	
 }
+
 
 
 function Validador() {
@@ -70,28 +83,23 @@ function Validador() {
 
 
 function fillFaker(){
-	console.log("In");
-	var path = location.pathname.split('/');
-	if (path[path.length-2].indexOf('.html')>-1) {
-		  path.length = path.length - 1;
-		}
-	var app = path[path.length-3];
-	console.log(app);
+	
+	doDebug(app);
 	
 	$("#RegForm").hide();
 	$("#loadingdiv").show();
 	
 	$.ajax({
 		
-		url: "/"+ app +"/fake",
+		url: "/springdemo/fake",
 		type:"GET",
 		
 		error: function(){
-			console.log("error");
+			doDebug("fillFaker error");
 		},
 		success: function(data){
-			console.log(data);
-			console.log(data.firstName);
+			doDebug(data);
+			doDebug(data.firstName);
 			$("#firstName").val(data.firstName);
 			$("#lastName").val(data.lastName);
 			$("#email").val(data.email);
@@ -104,25 +112,22 @@ function fillFaker(){
 
 
 function showList(){
-	console.log("In");
-	var path = location.pathname.split('/');
-	if (path[path.length-2].indexOf('.html')>-1) {
-		  path.length = path.length - 1;
-		}
-	var app = path[path.length-3];
-	console.log(app);
 	
+	doDebug("showList");
+
 	$("#RegForm").hide();
 	$("#loadingdiv").show();
 	
 	$.ajax({
 		
-		url: "/"+ app +"/list",
+		url: "/springdemo/list",
 		type:"GET",
-		error: function(){
-			console.log("error");
+		error: function(trim){
+			doError(trim);
 		},
 		success: function(data){
+			
+			customers = data.lista;
 			
 			var $table = $("<table border='1' ></table>"); 
 	        $table.append(	"<tr>" +
@@ -140,13 +145,13 @@ function showList(){
 						"	<td>" + obj.lastName + "</td>" +
 						"	<td>" + obj.email +"</td>" +
 						"	<td>" +
-						"		<button  type='button'    class='btn btn-info btn-sm' data-toggle='modal' data-target='#myModal'   id='" + obj.id + "'>Edit</button>&nbsp;&nbsp;" +
-						"		<button  name='delButton' class='btn btn-info btn-sm' method='delete' onclick='deleteCustomer(id)' id='" + obj.id + "'>Delete</button>" +
+						"		<button  type='button'    class='btn btn-info btn-sm' data-toggle='modal' onclick='openModalCustomer("+ obj.id +")'> Edit </button>&nbsp;&nbsp;" +
+						"		<button  name='delButton' class='btn btn-info btn-sm' method='delete' onclick='deleteCustomer(id)' id='" + obj.id + "'> Delete </button>" +
 						"	</td>" +
 						"</tr>")
 						
 			}
-			$("body").append($table);
+			$("#hiddenTable").html($table);
 		}
 	});
 	
@@ -154,42 +159,132 @@ function showList(){
 
 function deleteCustomer(id){
 	
-	
-	
 	if (confirm('Do you really want to delete record?')) {
 		
-		var path = location.pathname.split('/');
-		if (path[path.length-2].indexOf('.html')>-1) {
-			  path.length = path.length - 1;
-			}
-		var app = path[path.length-3];
+		doDebug("deleteCustomer: " + id);
 		
-		console.log(app);
-		console.log("/"+ app +"/delete/"+id);
+		doDebug("/springdemo/customer/delete/"+id);
 		
 		$.ajax({
 			
 	        type : 'DELETE',
 	        contentType: "application/json",
-	        url : "/"+ app +"/delete/"+id,
+	        url : "/springdemo/customer/delete/"+id,
 	        dataType : 'json',
 	        
 	        success: function (result) {
-	        	console.log(result);
+	        	doDebug(result);
 	        	var tr = "tr"+id;
 	        	document.getElementById(tr).remove();
 	        },
 	        error: function (e) {
-	            console.log(e);
+	            doDebug("deleteCustomer Error");
 	        }
 	   })
 	}
 };
 
 
+function getCustomer(id){
+	
+	doDebug("getCustomer");
+	
+	for(customer of customers){
+		
+		doDebug("getCustomer customer: " + customer);
+		
+		if(customer.id == id){
+			return customer;
+		}
+	}
+	
+}
+
+function openModalCustomer(id){
+	
+	doDebug("openModalCustomer");
+	
+	emptyModal();
+	
+	customer = getCustomer(id);
+	
+	doDebug(customer);
+	
+	if(customer){
+		$("#modalId").val(customer.id);
+		$("#modalFirstName").val(customer.firstName);
+		$("#modalLastName").val(customer.lastName);
+		$("#modalEmail").val(customer.email);
+	}else{
+		emptyModal();
+	}
+	
+	$("#myModal").modal();
+}
 
 
+function doDebug(trim){
+	if(debug){
+		console.log(trim);
+	}
+}
 
+function saveOrUpdateModal(){
+	
+	doDebug("saveOrUpdateModal");
+	
+	customer = {id:$("#modalId").val(), 
+			firstName:$("#modalFirstName").val(),
+			lastName:$("#modalLastName").val(),
+			email:$("#modalEmail").val()};
+	
+	if(inputCorrect(customer)){
+		
+		method = (customer.id === '') ? 'POST' : 'PUT';
+		
+		$.ajax({
+			
+	        type : method,
+	        contentType: "application/json",
+	        url : "/springdemo/customer",
+	        dataType : 'json',
+	        data: JSON.stringify(customer),
+	        
+	        success: function (data) {
+	        	doDebug(data);
+	        	showList();
+	        	$('#myModal').modal('hide');
+	        },
+	        error: function (e) {
+	            doDebug("saveOrUpdateModal Error");
+	        }
+	   })
+	   
+	}
+}
+
+function emptyModal(){
+	
+	$("#modalId").val('');
+	$("#modalFirstName").val('');
+	$("#modalLastName").val('');
+	$("#modalEmail").val('');
+	
+}
+
+
+function doError(trim){
+	
+	console.trace(trim);
+	
+}
+
+function inputCorrect(customer){
+	
+	//agregar logica de val, dar mensaje al usuario
+	
+	return true;
+}
 
 
 

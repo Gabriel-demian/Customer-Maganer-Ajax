@@ -26,19 +26,13 @@
 				<h2>CRM - Customer Relationship Manager</h2>
 			</div>
 		</div>
-			
-		
 		
 		<div id="content" align="center">
 		
-				<!-- UPDATE CUSTOMER -->
-				<c:url var="updateLink" value="editPage()'">
-					<c:param name="customerId" value="${tempCustomer.id}"></c:param>
-				</c:url>
-		
+				
 				<!-- ADD CUSTOMER -->
 				<input type="button" value="Add Customer"
-						onclick="window.location.href='showFormAdd'; return false;" 
+						onclick="openModalCustomer()" 
 						class="add-button"
 				/>
 				
@@ -50,32 +44,8 @@
 				/>
 				<br>
 		</div>
-		
-		
-		
-
-  <!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Edit Customerr</h4>
-        </div>
-        
-        
-        <jsp:include page="table-edit-include.jsp" flush="true" />
-        
-        
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-      
-    </div>
-  </div>
+		<div id="hiddenTable"></div>
+		<jsp:include page="table-edit-include.jsp" flush="true" />
 		
 	</body>
 </html>
