@@ -6,6 +6,8 @@
 		<meta charset="ISO-8859-1">
 		<title>List Customers</title>
 		
+		<meta name="viewport" content="width=device-width"/>
+		
 		<!-- Referenciar la plantilla de estilos -->
 		<link type="text/css"
 		rel="stylesheet"
