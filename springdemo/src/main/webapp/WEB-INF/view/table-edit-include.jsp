@@ -46,7 +46,9 @@
 					</table>
 				</div>
 				<input type="hidden" id="modalId" type="text" />
+				
 				<div class="modal-footer">
+					<button class="btn btn-primary" onclick="fillFakerNew()" >Fake</button>
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				</div>
 		</div>

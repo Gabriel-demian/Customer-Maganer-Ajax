@@ -298,8 +298,6 @@ function doError(trim){
 
 function inputCorrect(customer){
 	
-	
-	//agregar logica de val, dar mensaje al usuario
 	if(Validador(customer)){
 		return true;
 	}else{
@@ -310,7 +308,26 @@ function inputCorrect(customer){
 }
 
 
-
+function fillFakerNew(){
+	
+	doDebug(app);
+	
+	$.ajax({
+		
+		url: "/springdemo/fake",
+		type:"GET",
+		
+		error: function(){
+			doDebug("fillFaker error");
+		},
+		success: function(data){
+			$("#modalFirstName").val(data.firstName);
+			$("#modalLastName").val(data.lastName);
+			$("#modalEmail").val(data.email);
+		}
+		
+	});
+}
 
 
 
