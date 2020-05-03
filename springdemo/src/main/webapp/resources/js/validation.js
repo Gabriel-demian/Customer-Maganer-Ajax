@@ -17,12 +17,6 @@ window.onload = function(){
 
 
 function Validador(customer) {
-
-//	var firstName = document.forms['RegForm']['firstName'];
-//	var lastName = document.forms['RegForm']['lastName'];
-//	var email = document.forms['RegForm']['email'];
-	
-	
 	
 	var firstName = customer.firstName;
 	var lastName = customer.lastName;
@@ -40,40 +34,34 @@ function Validador(customer) {
 	var tieneError = false;
 
 	if (firstName === "" || firstName.trim() == "") {
-		//firstName.style.border = "1px solid red";
 		document.getElementById('name_error').style.color = "red";
 		document.getElementById('modalFirstName').style.color = "red";
 		name_error.textContent = "first name is required";
 		tieneError = true;
 	} else {
 		if (firstName.length < 3) {
-			//firstName.style.border = "1px solid red";
 			document.getElementById('name_error').style.color = "red";
 			document.getElementById('modalFirstName').style.color = "red";
 			name_error.textContent = "first name must be at least 3 characters";
 			tieneError = true;
 		} else {
-			//firstName.style.border = "1px solid #5e6e66";
 			document.getElementById('modalFirstName').style.color = "green";
 			name_error.innerHTML = "";
 		}
 	}
 	// validate lastName
 	if (lastName === "" || lastName.trim() == "") {
-		//lastName.style.border = "1px solid red";
 		document.getElementById('lastname_error').style.color = "red";
 		document.getElementById('modalLastName').style.color = "red";
 		lastname_error.textContent = "last name is required";
 		tieneError = true;
 	} else {
 		if (lastName.length < 3) {
-			//lastName.style.border = "1px solid red";
 			document.getElementById('lastname_error').style.color = "red";
 			document.getElementById('modalLastName').style.color = "red";
 			lastname_error.textContent = "last name must be at least 3 characters";
 			tieneError = true;
 		} else {
-			//lastName.style.border = "1px solid #5e6e66";
 			document.getElementById('modalLastName').style.color = "green";
 			lastname_error.innerHTML = "";
 		}
@@ -86,7 +74,6 @@ function Validador(customer) {
 		email_error.textContent = "Please, enter a valid email address";
 		tieneError = true;
 	}else {
-		//email.style.border = "1px solid #5e6e66";
 		document.getElementById('modalEmail').style.color = "green";
 		email_error.innerHTML = "";
 	}

@@ -15,7 +15,7 @@
 				</div>
 			</div>
 				<div align="center" id="container">
-					<h3>Edit Customer</h3>
+					<h3>Customer Data</h3>
 					
 					<table>
 						<tbody>
