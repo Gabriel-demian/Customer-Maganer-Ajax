@@ -11,12 +11,23 @@
 		rel="stylesheet"
 		href="${pageContext.request.contextPath}/resources/css/style.css" />
 		
+		<!-- Referenciar la plantilla de estilos -->
+		<link type="text/css"
+		rel="stylesheet"
+		href="${pageContext.request.contextPath}/resources/css/add-customer-style.css" />
 		
-		<script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+		
+		<!-- Script Validaciones -->
 		<script src="${pageContext.request.contextPath}/resources/js/validation.js"></script>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+		
+		<!-- Script Jquery -->
+		<script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
   		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
- 		 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  		
+  		<!-- Bootstrap -->
+  		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+ 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+ 		
 		
 	</head>
 	<body onload="showList()" >
@@ -43,6 +54,7 @@
 						class="add-button"
 				/>
 				<br>
+				
 		</div>
 		<div id="hiddenTable"></div>
 		<jsp:include page="table-edit-include.jsp" flush="true" />

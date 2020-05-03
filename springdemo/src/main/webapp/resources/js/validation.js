@@ -16,71 +16,88 @@ window.onload = function(){
 
 
 
-function Validador() {
+function Validador(customer) {
 
-	var firstName = document.forms['RegForm']['firstName'];
-	var lastName = document.forms['RegForm']['lastName'];
-	var email = document.forms['RegForm']['email'];
-
+//	var firstName = document.forms['RegForm']['firstName'];
+//	var lastName = document.forms['RegForm']['lastName'];
+//	var email = document.forms['RegForm']['email'];
+	
+	
+	
+	var firstName = customer.firstName;
+	var lastName = customer.lastName;
+	var email = customer.email;
+	
+	console.log(customer);
+	console.log(firstName);
+	console.log(lastName);
+	console.log(email);
+			
 	var name_error = document.getElementById('name_error');
 	var lastname_error = document.getElementById('lastname_error');
 	var email_error = document.getElementById('email_error');
 
 	var tieneError = false;
 
-	if (firstName.value == "" || firstName.value.trim() == "") {
-		firstName.style.border = "1px solid red";
-		document.getElementById('firstName').style.color = "red";
+	if (firstName === "" || firstName.trim() == "") {
+		//firstName.style.border = "1px solid red";
+		document.getElementById('name_error').style.color = "red";
+		document.getElementById('modalFirstName').style.color = "red";
 		name_error.textContent = "first name is required";
-		//firstName.focus();
 		tieneError = true;
 	} else {
-		if (firstName.value.length < 3) {
-			firstName.style.border = "1px solid red";
-			document.getElementById('firstName').style.color = "red";
+		if (firstName.length < 3) {
+			//firstName.style.border = "1px solid red";
+			document.getElementById('name_error').style.color = "red";
+			document.getElementById('modalFirstName').style.color = "red";
 			name_error.textContent = "first name must be at least 3 characters";
 			tieneError = true;
 		} else {
-			firstName.style.border = "1px solid #5e6e66";
-			document.getElementById('firstName').style.color = "green";
+			//firstName.style.border = "1px solid #5e6e66";
+			document.getElementById('modalFirstName').style.color = "green";
 			name_error.innerHTML = "";
 		}
 	}
 	// validate lastName
-	if (lastName.value == "" || lastName.value.trim() == "") {
-		lastName.style.border = "1px solid red";
-		document.getElementById('lastName').style.color = "red";
+	if (lastName === "" || lastName.trim() == "") {
+		//lastName.style.border = "1px solid red";
+		document.getElementById('lastname_error').style.color = "red";
+		document.getElementById('modalLastName').style.color = "red";
 		lastname_error.textContent = "last name is required";
-		//lastName.focus();
 		tieneError = true;
 	} else {
-		if (lastName.value.length < 3) {
-			lastName.style.border = "1px solid red";
-			document.getElementById('lastName').style.color = "red";
+		if (lastName.length < 3) {
+			//lastName.style.border = "1px solid red";
+			document.getElementById('lastname_error').style.color = "red";
+			document.getElementById('modalLastName').style.color = "red";
 			lastname_error.textContent = "last name must be at least 3 characters";
 			tieneError = true;
 		} else {
-			lastName.style.border = "1px solid #5e6e66";
-			document.getElementById('lastName').style.color = "green";
+			//lastName.style.border = "1px solid #5e6e66";
+			document.getElementById('modalLastName').style.color = "green";
 			lastname_error.innerHTML = "";
 		}
 	}
 
 	// validate email
-	if (email.value == "" || email.value.trim() == "") {
-		email.style.border = "1px solid red";
-		document.getElementById('email').style.color = "red";
-		email_error.textContent = "Email is required";
+	if (email == "" || email.trim() == "" || !validateEmail(email)) {
+		document.getElementById('email_error').style.color = "red";
+		document.getElementById('modalEmail').style.color = "red";
+		email_error.textContent = "Please, enter a valid email address";
 		tieneError = true;
-	} else {
-		email.style.border = "1px solid #5e6e66";
-		document.getElementById('email').style.color = "green";
+	}else {
+		//email.style.border = "1px solid #5e6e66";
+		document.getElementById('modalEmail').style.color = "green";
 		email_error.innerHTML = "";
 	}
 
 	return !tieneError;
 }
 
+function validateEmail(email) {
+  var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(email);
+}
 
 function fillFaker(){
 	
@@ -281,9 +298,15 @@ function doError(trim){
 
 function inputCorrect(customer){
 	
-	//agregar logica de val, dar mensaje al usuario
 	
-	return true;
+	//agregar logica de val, dar mensaje al usuario
+	if(Validador(customer)){
+		return true;
+	}else{
+		return false;
+	}
+	
+	
 }
 
 
